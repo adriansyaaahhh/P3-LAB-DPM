@@ -11,9 +11,41 @@ class HomeView extends Component {
       description: '',
       amount: '',
       transactions: [],
-      error: ''
+      error: '',
     };
   }
+
+  // Lifecycle method: Saat komponen pertama kali dimuat
+  componentDidMount() {
+    console.log('HomeView mounted');
+    this.loadTransactions();
+  }
+
+  // Lifecycle method: Saat state atau props berubah
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.transactions !== this.state.transactions) {
+      console.log('Transactions updated', this.state.transactions);
+      this.saveTransactions();
+    }
+  }
+
+  // Lifecycle method: Saat komponen akan dihapus
+  componentWillUnmount() {
+    console.log('HomeView will unmount');
+  }
+
+  // Fungsi untuk memuat transaksi dari penyimpanan (contoh: AsyncStorage)
+  loadTransactions = () => {
+    // Simulasi data transaksi dari penyimpanan lokal
+    const savedTransactions = [];
+    this.setState({ transactions: savedTransactions });
+  };
+
+  // Fungsi untuk menyimpan transaksi ke penyimpanan (contoh: AsyncStorage)
+  saveTransactions = () => {
+    // Di sini Anda dapat menambahkan logika untuk menyimpan transaksi ke penyimpanan lokal
+    console.log('Transactions saved:', this.state.transactions);
+  };
 
   // Fungsi untuk menambahkan transaksi
   addTransaction = (type) => {
@@ -36,7 +68,7 @@ class HomeView extends Component {
       transactions: [...transactions, newTransaction],
       description: '',
       amount: '',
-      error: ''
+      error: '',
     });
   };
 
@@ -44,7 +76,7 @@ class HomeView extends Component {
   deleteTransaction = (id) => {
     const { transactions } = this.state;
     this.setState({
-      transactions: transactions.filter((transaction) => transaction.id !== id)
+      transactions: transactions.filter((transaction) => transaction.id !== id),
     });
   };
 
